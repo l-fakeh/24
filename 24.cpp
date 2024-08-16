@@ -109,7 +109,12 @@ int main() {
                         }
                         for(const auto& result : results) {
                             dfs(ans + result.first,x + 2,format(exp, '+', result.second));
-                            dfs(ans - result.first,x + 2,format(exp, '-', result.second));
+                            if(ans - result.first > 0) {
+                                dfs(ans - result.first,x + 2,format(exp, '-', result.second));
+                            }
+                            else {
+                                dfs(result.first - ans,x + 2,format(result.second, '-', exp));
+                            }
                             dfs(ans * result.first,x + 2,format(exp, '*', result.second));
                             dfs(ans / result.first,x + 2,format(exp, '/', result.second));
                         }
@@ -123,6 +128,12 @@ int main() {
                 vis[i] = true;
                 dfs(ans + start[i], x + 1, format(exp, '+', std::to_string(start[i])));
                 dfs(ans - start[i], x + 1, format(exp, '-', std::to_string(start[i])));
+                if(ans - start[i] > 0) {
+                    dfs(ans - start[i], x + 1, format(exp, '-', std::to_string(start[i])));
+                }
+                else {
+                    dfs(start[i] - ans, x + 1, format(std::to_string(start[i]), '-', exp));
+                 }
                 dfs(ans * start[i], x + 1, format(exp, '*', std::to_string(start[i])));
                 dfs(ans / start[i], x + 1, format(exp, '/', std::to_string(start[i])));
                 vis[i] = false;
